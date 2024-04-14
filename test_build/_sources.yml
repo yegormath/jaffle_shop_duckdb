@@ -1,0 +1,169 @@
+sources:
+- name: customers
+  columns:
+  - name: customer_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: first_name
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: last_name
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: first_order
+    description: ""
+    data_type: DATE
+    tests: []
+  - name: most_recent_order
+    description: ""
+    data_type: DATE
+    tests: []
+  - name: number_of_orders
+    description: ""
+    data_type: BIGINT
+    tests: []
+  - name: customer_lifetime_value
+    description: ""
+    data_type: DOUBLE
+    tests: []
+- name: orders
+  columns:
+  - name: order_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: customer_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: order_date
+    description: ""
+    data_type: DATE
+    tests: []
+  - name: status
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: credit_card_amount
+    description: ""
+    data_type: DOUBLE
+    tests: []
+  - name: coupon_amount
+    description: ""
+    data_type: DOUBLE
+    tests: []
+  - name: bank_transfer_amount
+    description: ""
+    data_type: DOUBLE
+    tests: []
+  - name: gift_card_amount
+    description: ""
+    data_type: DOUBLE
+    tests: []
+  - name: amount
+    description: ""
+    data_type: DOUBLE
+    tests: []
+- name: raw_customers
+  columns:
+  - name: id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: first_name
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: last_name
+    description: ""
+    data_type: VARCHAR
+    tests: []
+- name: raw_orders
+  columns:
+  - name: id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: user_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: order_date
+    description: ""
+    data_type: DATE
+    tests: []
+  - name: status
+    description: ""
+    data_type: VARCHAR
+    tests: []
+- name: raw_payments
+  columns:
+  - name: id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: order_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: payment_method
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: amount
+    description: ""
+    data_type: INTEGER
+    tests: []
+- name: stg_customers
+  columns:
+  - name: customer_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: first_name
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: last_name
+    description: ""
+    data_type: VARCHAR
+    tests: []
+- name: stg_orders
+  columns:
+  - name: order_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: customer_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: order_date
+    description: ""
+    data_type: DATE
+    tests: []
+  - name: status
+    description: ""
+    data_type: VARCHAR
+    tests: []
+- name: stg_payments
+  columns:
+  - name: payment_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: order_id
+    description: ""
+    data_type: INTEGER
+    tests: []
+  - name: payment_method
+    description: ""
+    data_type: VARCHAR
+    tests: []
+  - name: amount
+    description: ""
+    data_type: DOUBLE
+    tests: []

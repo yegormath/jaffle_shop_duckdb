@@ -21,7 +21,7 @@ certifi==2024.2.2
 cffi==1.16.0
     # via dbt-core
 chardet==5.2.0
-    # viax
+    # via
     #   diff-cover
     #   sqlfluff
 charset-normalizer==3.3.2

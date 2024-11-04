@@ -1,7 +1,7 @@
 name: 'jaffle_shop'
 
 config-version: 2
-version: '0.1'
+version: '0.1.0'
 
 profile: 'jaffle_shop'
 
@@ -17,18 +17,26 @@ clean-targets:
     - "dbt_modules"
     - "logs"
 
-require-dbt-version: [">=1.0.0", "<2.0.0"]
+require-dbt-version: [">=0.0.1", "<2.0.0"]
 
-seeds: 
-  +docs:
-    node_color: '#cd7f32'
+seeds:
+  jaffle_shop:
+    employee:
+      enabled: true
+      all_varchar: true  # Force all columns to load as VARCHAR
+    employee2service:
+      enabled: true
 
 models:
   jaffle_shop:
-    materialized: table
+    materialized: table  # Default materialization for all models in jaffle_shop
     staging:
       materialized: view
+      stg_products:
+        materialized: table  # Explicitly materialize stg_products as a table
       +docs:
         node_color: 'silver'
-    +docs:
-      node_color: 'gold'
+    mart:
+      materialized: table  # Materialize all mart models as tables
+      +docs:
+        node_color: 'gold'

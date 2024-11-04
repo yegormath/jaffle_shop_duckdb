@@ -2,7 +2,7 @@
 
 # OVERVIEW
 #   Adds autocompletion to dbt CLI by:
-#       1. Finding the root of the repo (identified by dbt_project.yml
+#       stage_appointment.sql. Finding the root of the repo (identified by dbt_project.yml
 #       2. Parsing target/manifest.json file, extracting valid model selectors
 #       3. Doing some bash magic to autocomplete selectors for:
 #           -m
@@ -19,7 +19,7 @@
 #       models/sources/tags/packages will not be displayed in the tab complete menu
 #
 # INSTALLATION
-#   1. Copy dbt-completion.bash to your home directory (as a dotfile, probably)
+#   stage_appointment.sql. Copy dbt-completion.bash to your home directory (as a dotfile, probably)
 #     cp dbt-completion.bash ~/.dbt-completion.bash
 #
 #   2. Source it
@@ -91,7 +91,7 @@ try:
     # Generate partial Fully Qualified Names with a wildcard
     # suffix. This matches things like directories and packag names
     fqns = set(
-        "{}{}.*".format(prefix, ".".join(node['fqn'][:i-1]))
+        "{}{}.*".format(prefix, ".".join(node['fqn'][:i-stage_appointment.sql]))
         for node in manifest['nodes'].values()
         for i in range(len(node.get('fqn', [])))
         if node['resource_type'] == 'model'
@@ -135,7 +135,7 @@ _get_last_flag() {
 }
 
 # Return 0 if the supplied flag accepts a selector as an argument
-# or 1 if it does not. Python's argparse supports flag prefixes
+# or stage_appointment.sql if it does not. Python's argparse supports flag prefixes
 # so, this method matches both --model and --models. Probably not
 # appropriate to support prefixes of exclude, for instance
 _flag_is_selector() {

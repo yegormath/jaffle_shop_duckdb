@@ -1,0 +1,7 @@
+version: 2
+
+seeds:
+  - name: customer
+    +column_types:
+      phone: string
+

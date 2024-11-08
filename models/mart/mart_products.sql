@@ -1,13 +1,13 @@
 -- Corrected Query without Recursion
 
-WITH stg_products AS (
+WITH staging_products AS (
     SELECT
         id AS product_id,
         name,
         description,
         quantity,
         cost
-    FROM {{ ref('product') }}  -- Reference the raw table or lower-level staging table here
+    FROM {{ ref('stg_products') }}  -- Reference the raw table or lower-level staging table here
 ),
 
 product_cost_analysis AS (

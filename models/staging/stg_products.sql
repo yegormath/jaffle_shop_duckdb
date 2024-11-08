@@ -1,4 +1,4 @@
-WITH stg_products AS (
+WITH raw_products AS (
     SELECT
         id AS product_id,
         name,
@@ -9,5 +9,5 @@ WITH stg_products AS (
 )
 
 SELECT *
-FROM stg_products
+FROM raw_products
 WHERE product_id IS NOT NULL

@@ -1,14 +1,15 @@
+-- Corrected Query without Recursion
+
 WITH stg_products AS (
     SELECT
-        product_id,
+        id AS product_id,
         name,
         description,
         quantity,
         cost
-    FROM {{ ref('stg_products') }}
+    FROM {{ ref('product') }}  -- Reference the raw table or lower-level staging table here
 ),
 
--- Define cost ranges and rank products within each range by quantity
 product_cost_analysis AS (
     SELECT
         product_id,
@@ -26,14 +27,16 @@ product_cost_analysis AS (
         END AS cost_range,
 
         -- Rank products within each cost range by quantity (descending)
-        RANK() OVER (PARTITION BY
-            CASE
-                WHEN cost < 10 THEN 'Low'
-                WHEN cost BETWEEN 10 AND 50 THEN 'Medium'
-                WHEN cost BETWEEN 50 AND 100 THEN 'High'
-                ELSE 'Premium'
-            END
-            ORDER BY quantity DESC) AS quantity_rank
+        RANK() OVER (
+            PARTITION BY
+                CASE
+                    WHEN cost < 10 THEN 'Low'
+                    WHEN cost BETWEEN 10 AND 50 THEN 'Medium'
+                    WHEN cost BETWEEN 50 AND 100 THEN 'High'
+                    ELSE 'Premium'
+                END
+            ORDER BY quantity DESC
+        ) AS quantity_rank
     FROM stg_products
 )
 

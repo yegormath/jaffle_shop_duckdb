@@ -29,3 +29,6 @@ models:
         tests:
           - accepted_values:
               values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
+  - name: stg_customer
+  - name: stg_service
+

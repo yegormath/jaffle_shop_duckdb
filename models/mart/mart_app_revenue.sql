@@ -1,51 +1,57 @@
+{{ config(
+    materialized='table'
+) }}
 
-
-WITH appointment_data AS (
+WITH raw_appointment AS (
     SELECT
-        a.appointment_id,
-        a.date_time,
-        a.status,
-        a.customer_id,
-        a.service_id,
-        a.employee_id
-    FROM {{ ref('stg_appointment') }} a
+        id AS appointment_id,
+        customer_id,
+        service_id,
+        employee_id,
+        date_time,
+        status
+    FROM {{ ref('appointment') }}
 ),
 
-customer_data AS (
+customer_base AS (
     SELECT
-        customer_id AS id,
+        id AS customer_id,
         name AS customer_name,
-        phone AS customer_phone,
-        email AS customer_email,
-        address AS customer_address
-    FROM {{ ref('stg_customer') }}
+        phone,
+        email,
+        address
+    FROM {{ ref('raw_customer') }}
 ),
 
-payment_data AS (
+raw_payment AS (
     SELECT
         appointment_id,
+        customer_id,
         date_time AS payment_date,
         amount AS payment_amount,
-        payment_method
-    FROM {{ ref('stg_payment') }}
+        LOWER(payment_method) AS payment_method
+    FROM {{ ref('payment') }}
     WHERE payment_method IS NOT NULL AND payment_method != 'NA'
 ),
 
-product_data AS (
+raw_products AS (
     SELECT
-        product_id,
+        id AS product_id,
         name AS product_name,
+        description AS product_description,
         quantity,
         cost AS product_cost
-    FROM {{ ref('stg_products') }}
+    FROM {{ ref('product') }}
 ),
 
-service_data AS (
+service_base AS (
     SELECT
-        service_id,
+        id AS service_id,
         name AS service_name,
+        description AS service_description,
+        duration,
         price AS service_price
-    FROM {{ ref('stg_service') }}
+    FROM {{ ref('service') }}
 ),
 
 appointment_revenue AS (
@@ -54,22 +60,22 @@ appointment_revenue AS (
         a.date_time,
         a.status,
         c.customer_name,
-        c.customer_phone,
+        c.phone AS customer_phone,
         s.service_name,
         s.service_price,
         p.payment_amount,
         p.payment_method,
 
-        -- Total product cost calculation (assuming a link between products and appointments exists)
+        -- Calculate product revenue if products are associated with appointments
         COALESCE(pr.quantity * pr.product_cost, 0) AS total_product_cost,
 
-        -- Calculate total revenue per appointment (service + products)
+        -- Calculate total revenue per appointment (services + products)
         s.service_price + COALESCE(pr.quantity * pr.product_cost, 0) AS total_appointment_revenue
-    FROM appointment_data a
-    LEFT JOIN customer_data c ON a.customer_id = c.id
-    LEFT JOIN service_data s ON a.service_id = s.service_id
-    LEFT JOIN payment_data p ON a.appointment_id = p.appointment_id
-    LEFT JOIN product_data pr ON a.appointment_id = pr.product_id  -- Assuming products can be linked to appointments
+    FROM raw_appointment a
+    LEFT JOIN customer_base c ON a.customer_id = c.customer_id
+    LEFT JOIN service_base s ON a.service_id = s.service_id
+    LEFT JOIN raw_payment p ON a.appointment_id = p.appointment_id
+    LEFT JOIN raw_products pr ON a.appointment_id = pr.product_id  -- Assuming products can be linked to appointments
 )
 
 SELECT

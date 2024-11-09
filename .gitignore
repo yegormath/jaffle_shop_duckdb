@@ -9,3 +9,4 @@ venv/
 env/
 **/*.duckdb
 **/*.duckdb.wal
+/beauty_salon.duckdb.tmp

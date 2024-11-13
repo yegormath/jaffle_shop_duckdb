@@ -2,10 +2,11 @@ WITH staged_payment AS (
     SELECT
         appointment_id,
         customer_id,
+        payment_id,
         date_time,
         amount,
         payment_method
-    FROM {{ ref('stg_payment') }}  -- Ensure this reference is correct
+    FROM {{ ref('stg_payment') }}
 )
 
 SELECT

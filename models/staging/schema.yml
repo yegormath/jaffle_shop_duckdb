@@ -1,25 +1,25 @@
 version: 2
 
 models:
-  - name: stg_customers
+  - name: stg_customer
     columns:
-      - name: customer_id
+      - name: id
         tests:
           - unique
           - not_null
 
-  - name: stg_orders
+  - name: stg_appointment
     columns:
-      - name: order_id
+      - name: appointment_id
         tests:
           - unique
           - not_null
       - name: status
         tests:
           - accepted_values:
-              values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+              values: ['arranged', 'done', 'cancelled']
 
-  - name: stg_payments
+  - name: stg_payment
     columns:
       - name: payment_id
         tests:
@@ -28,7 +28,17 @@ models:
       - name: payment_method
         tests:
           - accepted_values:
-              values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
-  - name: stg_customer
-  - name: stg_service
+              values: ['online', 'salon cash', 'salon card', 'na']
+  - name: stg_products
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
 
+  - name: stg_service
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

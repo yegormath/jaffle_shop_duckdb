@@ -4,16 +4,11 @@ WITH raw_payment AS (
         customer_id,
         date_time,
         amount,
-        payment_method
-    FROM {{ ref('payment') }}  -- Ensure that this reference is correct
+        LOWER(payment_method) AS payment_method,
+        (CONCAT(appointment_id, '_', customer_id)) AS payment_id
+    FROM {{ ref('payment') }}
+    WHERE payment_method IS NOT NULL
 )
 
-SELECT
-    appointment_id,
-    customer_id,
-    date_time,
-    amount,
-    LOWER(payment_method) AS payment_method
+SELECT *
 FROM raw_payment
-WHERE payment_method IS NOT NULL
-    AND payment_method != 'NA'

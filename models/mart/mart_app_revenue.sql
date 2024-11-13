@@ -65,16 +65,16 @@ appointment_revenue AS (
         p.payment_amount,
         p.payment_method,
 
-        -- Calculate product revenue if products are associated with appointments
+        -- revenue for products associated with appointments
         COALESCE(pr.quantity * pr.product_cost, 0) AS total_product_cost,
 
-        -- Calculate total revenue per appointment (services + products)
+        -- total revenue (service + products)
         s.service_price + COALESCE(pr.quantity * pr.product_cost, 0) AS total_appointment_revenue
     FROM appointment_data a
     LEFT JOIN customer_data c ON a.customer_id = c.customer_id
     LEFT JOIN service_data s ON a.service_id = s.service_id
     LEFT JOIN payment_data p ON a.appointment_id = p.appointment_id
-    LEFT JOIN product_data pr ON a.appointment_id = pr.product_id  -- Assuming products can be linked to appointments
+    LEFT JOIN product_data pr ON a.appointment_id = pr.product_id
 )
 
 SELECT
